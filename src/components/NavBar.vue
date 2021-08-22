@@ -30,8 +30,8 @@
         <router-link to="/" class="w-full">
           <logo class="h-10 text-primary md:h-16" />
         </router-link>
-        <router-link to="/security"> Security </router-link>
-        <router-link to="/donations"> Donations </router-link>
+        <router-link to="/security" class="text-primary"> Security </router-link>
+        <router-link to="/donations" class="text-primary"> Donations </router-link>
       </div>
       <nav class="md:space-x-4 md:w-auto flex justify-between w-full">
         <router-link to="/upload-document" class="button primary"

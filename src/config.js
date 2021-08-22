@@ -1,3 +1,3 @@
 export default {
-    api_route: "http://localhost:3000"
+    api_route: process.env.VUE_APP_API_URL
 }

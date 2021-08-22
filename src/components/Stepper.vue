@@ -6,7 +6,7 @@
       my-4
       bg-white
       dark:bg-gray-900
-      rounded-lg
+      rounded-lg 
       shadow-md
       p-4
     "

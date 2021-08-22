@@ -63,7 +63,7 @@
             {{ document.type }}
           </span>
           <h3 class="text-lg relative mb-3">
-            {{ "ID No" + document.number + " with name " + document.f_name }}
+            {{ "ID No" + document.number + " with name " + document.name }}
           </h3>
 
           <div class="space-y-3">
@@ -73,7 +73,7 @@
                 {{ new Date(document.updatedAt).toLocaleString() }}</span
               >
               by
-              <span class="text-primary"> {{ document.name }} </span>
+              <span class="text-primary"> {{ document.f_name }} </span>
               <br />
               Found on the
               <span class="text-primary">
@@ -90,7 +90,9 @@
             </p>
 
             <div v-if="!document.claimAt">
-              <button @click="claim(document._id)">Claim it</button>
+              <button @click="claim(document._id)" class="text-primary">
+                Claim it
+              </button>
             </div>
 
             <div v-else>
@@ -101,6 +103,7 @@
           </div>
         </div>
       </article>
+      <claim-it-modal v-model="showModal" @submitted="confirmClaim" />
     </section>
   </div>
 </template>
@@ -112,21 +115,29 @@
   import CustomSelect from "@/components/CustomSelect";
   import axios from "axios";
   import config from "@/config";
+  import ClaimItModal from "../components/ClaimItModal.vue";
 
   export default {
     components: {
       CustomSelect,
+      ClaimItModal,
     },
 
     methods: {
       claim(id) {
-        if (
-          window.confirm("Please confirm that you're the owner of the document. ")
-        ) {
+        this.selected = id;
+        this.showModal = true;
+      },
+
+      confirmClaim(phone) {
+        console.log(phone);
+        if (this.documents.find((element) => element.f_number == phone)) {
           let self = this;
-          axios.put(config.api_route + "/claim/" + id).then(() => {
+          axios.put(config.api_route + "/claim/" + this.selected).then(() => {
             self.fetchData();
           });
+        } else {
+          alert("Can't verify that you're human.");
         }
       },
       fetchData: debounce(function () {
@@ -141,8 +152,10 @@
 
     data() {
       return {
+        showModal: false,
         form: { search: "" },
         documents: [],
+        selected: null,
       };
     },
 
