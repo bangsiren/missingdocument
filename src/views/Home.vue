@@ -53,7 +53,7 @@
           <img
             v-if="document.files.length > 0"
             class=""
-            :src="'//localhost:3000/' + document.files[0].path"
+            :src="document.files[0].path"
             :alt="document.title"
           />
         </figure>
