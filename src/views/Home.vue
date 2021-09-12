@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <section class="bg-white dark:bg-black w-full py-4 my-8 md:my-16">
-      <div
+    <section class=" dark:bg-black w-full py-4 my-8 md:my-16">
+      <div 
         class="
           flex flex-wrap
           md:flex-nowrap
@@ -37,12 +37,12 @@
       </div>
     </section>
 
-    <section class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <article
+    <section class=" grid md:grid-cols-3 lg:grid-cols-4 gap-4" >
+      <article  
         v-for="document in documents"
         :key="document._id"
         class="
-          bg-white
+        
           dark:bg-gray-900 dark:bg-opacity-90
           mb-3
           rounded-lg
@@ -55,6 +55,7 @@
             class=""
             :src="document.files[0].path"
             :alt="document.title"
+            @click="claim(document._id)"
           />
         </figure>
 
@@ -166,3 +167,8 @@
     },
   };
 </script>
+<style lang="css">
+    article {
+      cursor: pointer;
+    }
+</style>
