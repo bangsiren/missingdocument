@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <section class=" dark:bg-black w-full py-4 my-8 md:my-16">
+    <section class="bg-white dark:bg-black w-full py-4 my-8 md:my-16">
       <div 
         class="
           flex flex-wrap
