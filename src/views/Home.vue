@@ -17,7 +17,7 @@
           class="w-full dark:bg-transparent rounded-lg outline-none"
           placeholder="Search for Document by name, id number"
         />
-        <custom-select class="w-full md:w-72"> </custom-select>
+        <!-- <custom-select class="w-full md:w-72"> </custom-select> -->
         <!-- <custom-select class="w-full md:w-72"> </custom-select> -->
 
         <button
@@ -113,14 +113,14 @@
 
 <script>
   import { debounce } from "lodash";
-  import CustomSelect from "@/components/CustomSelect";
+  // import CustomSelect from "@/components/CustomSelect";
   import axios from "axios";
   import config from "@/config";
   import ClaimItModal from "../components/ClaimItModal.vue";
 
   export default {
     components: {
-      CustomSelect,
+      // CustomSelect,
       ClaimItModal,
     },
 

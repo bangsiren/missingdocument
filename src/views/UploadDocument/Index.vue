@@ -42,7 +42,7 @@
       form: {},
       steps: [
         {
-          name: "Ingresar datos del Auto",
+          name: "Information About Missing Document",
           desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
           icon: "fas fa-car",
           disabled: false,
@@ -50,7 +50,7 @@
           component: One,
         },
         {
-          name: "Paso 2",
+          name: "Founder Information",
           desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           disabled: false,
           active: false,
