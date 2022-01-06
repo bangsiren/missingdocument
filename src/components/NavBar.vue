@@ -32,6 +32,7 @@
         </router-link>
         <router-link to="/security" class="text-primary"> Security </router-link>
         <router-link to="/donations" class="text-primary"> Donations </router-link>
+         <router-link to="/post" class="text-primary"> Post </router-link>
       </div>
       <nav class="md:space-x-4 md:w-auto flex justify-between w-full">
         <router-link to="/upload-document" class="button primary"
