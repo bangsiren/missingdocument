@@ -11,3 +11,4 @@ app.use(Notifications)
 app.isCustomElement = tag => tag === 'ion-icon'
 app.mount('#app')
 
+// https://missingdocuments.herokuapp.com

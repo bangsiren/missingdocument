@@ -6,6 +6,7 @@
     >
       <div class="max-w-2xl mx-auto">
           <input
+      v-model="info.type"
       type="text"
       required
       name="type"
@@ -22,6 +23,7 @@
       "
     />
         <input
+         v-model="info.name"
       required
       name="name"
       type="text"
@@ -38,8 +40,9 @@
       "
     />
         <input
+      v-model="info.location"
       required
-      name="name"
+      name="location"
       type="text"
       placeholder="Location"
       class="
@@ -54,7 +57,9 @@
       "
     />
         <input
+      v-model="info.email"
       type="email"
+      name="email"
       placeholder="email"
       class="  w-full
         dark:bg-transparent
@@ -65,10 +70,43 @@
         mb-4
         mt-4"
     />
-      <button  class="button primary">
+      <button type="button" @click.prevent="uploadFile"  class="button primary">
         Submit
       </button>
       </div>
     </section>
   </div>
 </template>
+<script>
+    import axios from "axios";
+    import config from "@/config";
+   // import config from "@/config";
+  export default {
+    data: () => {
+      return {
+        info: {
+          type: null,
+          name: null,
+          email: null,
+          location: null
+        },
+      };
+    },
+  
+    methods: {
+      uploadFile() {
+        let global = this;
+        axios.post(`${config.api_route}/post`, this.info).then(() => {
+          console.log("Response Came");
+          
+          this.info.type = "";
+          this.info.name = "";
+          this.info.email = "",
+          this.info.location = "";
+          global.$router.push("/");
+        });
+      },
+    },
+    
+  };
+</script>
