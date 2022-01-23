@@ -1,12 +1,7 @@
 <template>
   <div>
-    <input
-      type="text"
-      v-model="form.type"
-      required
-      name="type"
-      placeholder="Type of document"
-      class="
+       <div>
+           <select   v-model="form.type"  class="
         w-full
         dark:bg-transparent
         rounded-lg
@@ -15,8 +10,13 @@
         ml-2
         mb-4
         mt-4
-      "
-    />
+      ">  
+            <option value="" disabled selected>Select Document Type</option>
+            <option class="op" value="ID Card">ID Card</option>
+            <option class="op"  value="Birth Certificate">Birth Certificate</option>
+            <option class="op"  value="Others">Others</option>
+          </select>
+        </div>
     <input
       type="number"
       v-model="form.number"
@@ -166,5 +166,9 @@
     },
   };
 </script>
-<style scoped>
+<style lang="css">
+   .op {
+     background-color: white;
+     color: black;
+   }
 </style>

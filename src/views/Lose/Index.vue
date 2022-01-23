@@ -5,13 +5,8 @@
       class="bg-white dark:bg-gray-900 rounded-lg w-full py-4 my-8 md:my-16"
     >
       <div class="max-w-2xl mx-auto">
-          <input
-      v-model="info.type"
-      type="text"
-      required
-      name="type"
-      placeholder="Type of document"
-      class="
+        <div>
+           <select   v-model="info.type"  class="
         w-full
         dark:bg-transparent
         rounded-lg
@@ -20,8 +15,14 @@
         ml-2
         mb-4
         mt-4
-      "
-    />
+      ">  
+            <option value="" disabled selected>Select Document Type</option>
+            <option class="op" value="ID Card">ID Card</option>
+            <option class="op"  value="Birth Certificate">Birth Certificate</option>
+            <option class="op"  value="Others">Others</option>
+          </select>
+        </div>
+ 
         <input
          v-model="info.name"
       required
@@ -110,3 +111,9 @@
     
   };
 </script>
+<style lang="css">
+   .op {
+     background-color: white;
+     color: black;
+   }
+</style>
