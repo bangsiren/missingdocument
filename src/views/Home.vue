@@ -49,10 +49,10 @@
           shadow-lg
         "
       >
-        <figure class="w-full">
+        <figure class="images-section w-full">
           <img
             v-if="document.files.length > 0"
-            class=""
+            class="images"
             :src="document.files[0].path"
             :alt="document.title"
             @click="claim(document._id)"
@@ -89,7 +89,7 @@
               Contact through:
               <small class="text-primary">{{ document.f_number }}</small>
             </p>
-
+            
             <div v-if="!document.claimAt">
               <button @click="claim(document._id)" class="text-primary">
                 Claim it
@@ -171,4 +171,22 @@
     article {
       cursor: pointer;
     }
+    .images-section:hover {
+   position:relative;
+   -webkit-animation:glide 2s ease-in-out alternate infinite;
+}
+
+@-webkit-keyframes glide  {
+   from {
+      left:0px;
+      top:0px;
+   }
+   
+   to {
+      left:0px;
+      top:20px;
+   }
+   
+
+}
 </style>

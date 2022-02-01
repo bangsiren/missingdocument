@@ -1,4 +1,6 @@
 <template>
+
+
   <header
     class="
       bg-white
@@ -30,20 +32,20 @@
         <router-link to="/" class="w-full">
           <logo class="h-10 text-primary md:h-16" />
         </router-link>
-        <router-link to="/security" class="text-primary"> Security </router-link>
-        <router-link to="/donations" class="text-primary"> Donations </router-link>
-         <router-link to="/post" class="text-primary"> Post </router-link>
+        <router-link to="/security" class="text-primary changetx"> Security </router-link>
+        <router-link to="/donations" class="text-primary changetx"> Donations </router-link>
+         <router-link to="/post" class="text-primary changetx"> Post </router-link>
       </div>
       <nav class="md:space-x-4 md:w-auto flex justify-between w-full">
-        <router-link to="/upload-document" class="button primary"
+        <router-link to="/upload-document" class="btn button primary"
           >Upload Document
         </router-link>
 
         <button
           @click="toggleTheme"
-          class="border-none outline-none focus:outline-none"
+          class="button btn outline white"
         >
-          <ion-icon name="contrast-outline"></ion-icon>
+         Theme
         </button>
       </nav>
     </div>
@@ -72,3 +74,39 @@
     },
   };
 </script>
+<style>
+   .btn {
+   position:relative;
+   -webkit-animation:glide 3s ease-in-out alternate infinite;
+}
+
+
+@media only screen and (max-width: 388px) {
+ .button.primary {
+    font-size: 12px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(130, 130, 232, var(--tw-bg-opacity));
+    --tw-border-opacity: 1;
+    border-color: rgba(130, 130, 232, var(--tw-border-opacity));
+    border-width: 2px;
+    --tw-text-opacity: 1;
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
+   }
+   .button.outline {
+    font-size: 14px;
+    --tw-border-opacity: 1;
+    border-color: rgba(130, 130, 232, var(--tw-border-opacity));
+    border-width: 2px;
+    --tw-text-opacity: 1;
+    color: rgba(130, 130, 232, var(--tw-text-opacity));
+   }
+
+}
+@media only screen and (max-width: 360px) {
+   .changetx {
+     font-size: 13px;
+   }
+}
+
+
+</style>

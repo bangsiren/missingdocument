@@ -34,6 +34,6 @@
       stroke="currentColor"
       stroke-width="7.72716"
       stroke-linejoin="round"
-    />
+    /> 
   </svg>
 </template>
