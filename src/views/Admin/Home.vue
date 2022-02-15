@@ -1,12 +1,16 @@
 <template>
   <div class="container">
+
+      <h1>Administrator</h1>
+      <button @click="logout">
+          Logout 
+      </button>
     <section class="bg-white dark:bg-black w-full py-4 my-8 md:my-16">
-      <div 
+      <div
         class="
           flex flex-wrap
           md:flex-nowrap
           max-w-5xl
-          mx-auto
           space-y-2
           md:space-y-0 md:space-x-3
         "
@@ -36,23 +40,16 @@
         </button>
       </div>
     </section>
-
-    <section class=" grid md:grid-cols-3 lg:grid-cols-4 gap-4" >
-      <article  
+    <section class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <article
         v-for="document in documents"
         :key="document._id"
-        class="
-        
-          dark:bg-gray-900 dark:bg-opacity-90
-          mb-3
-          rounded-lg
-          shadow-lg
-        "
+        class="dark:bg-gray-900 dark:bg-opacity-90 mb-3 rounded-lg shadow-lg"
       >
-        <figure class="images-section h-64 overflow-hidden  w-full">
+        <figure class="images-section h-64 overflow-hidden w-full">
           <img
             v-if="document.files.length > 0"
-            class="images "
+            class="images"
             :src="document.files[0].path"
             :alt="document.title"
             @click="claim(document._id)"
@@ -89,104 +86,64 @@
               Contact through:
               <small class="text-primary">{{ document.f_number }}</small>
             </p>
-            
-            <div v-if="!document.claimAt">
-              <button @click="claim(document._id)" class="text-primary">
-                Claim it
-              </button>
-            </div>
 
-            <div v-else>
-              <span class="bg-green-500 text-xs px-2 py-1 text-white">
-                Claimed
+            <div>
+              <span
+                class="bg-red-500 text-xs px-2 py-1 text-white"
+                @click="deleteDoc(document._id)"
+              >
+                Delete it.
               </span>
             </div>
           </div>
         </div>
       </article>
-      <claim-it-modal v-model="showModal" @submitted="confirmClaim" />
     </section>
   </div>
 </template>
 
-
-
 <script>
-  import { debounce } from "lodash";
-  // import CustomSelect from "@/components/CustomSelect";
-  import axios from "axios";
-  import config from "@/config";
-  import ClaimItModal from "../components/ClaimItModal.vue";
+import axios from "axios";
+import { debounce } from "lodash";
 
-  export default {
-    components: {
-      // CustomSelect,
-      ClaimItModal,
+import config from "@/config";
+
+export default {
+  data() {
+    return {
+      documents: [],
+      form: { search: "" },
+    };
+  },
+  methods: {
+    fetchData: debounce(function () {
+      axios.get(config.api_route, { params: this.form }).then((response) => {
+        this.documents = response.data;
+      });
+    }, 100),
+
+    logout(){
+        localStorage.removeItem('jwt');
+
+        this.$router.push('/admin/login');
     },
 
-    methods: {
-      claim(id) {
-        this.selected = id;
-        this.showModal = true;
-      },
-
-      confirmClaim(phone) {
-        console.log(phone);
-        if (this.documents.find((element) => element.f_number == phone)) {
-          let self = this;
-          axios.put(config.api_route + "/claim/" + this.selected).then(() => {
-            self.fetchData();
+    deleteDoc(id) {
+      if (window.confirm("Are you sure you want to deleted?")) {
+        axios
+          .delete(config.api_route + "/admin/documents/" + id, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+          })
+          .then(() => {
+            this.fetchData();
           });
-        } else {
-          alert("Can't verify that you're human.");
-        }
-      },
-      fetchData: debounce(function () {
-        axios.get(config.api_route, { params: this.form }).then((response) => {
-          this.documents = response.data;
-        });
-      }, 100),
+      }
     },
-    mounted() {
-      this.fetchData();
-    },
-
-    data() {
-      return {
-        showModal: false,
-        form: { search: "" },
-        documents: [],
-        selected: null,
-      };
-    },
-
-    watch: {
-      "form.search"() {
-        this.fetchData();
-      },
-    },
-  };
+  },
+  mounted() {
+    this.fetchData();
+  },
+};
 </script>
-<style lang="css">
-    article {
-      cursor: pointer;
-    }
-    .images-section:hover {
-   position:relative;
-   -webkit-animation:glide 2s ease-in-out alternate infinite;
-}
-
-@-webkit-keyframes glide  {
-   from {
-      left:0px;
-      top:0px;
-   }
-   
-   to {
-      left:0px;
-      top:20px;
-   }
-   
-
-}
-</style>
