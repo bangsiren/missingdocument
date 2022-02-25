@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="text-3xl mb-3">Security</h1>
+    <h1 class="text-3xl mb-3 ">Security</h1>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, numquam id
       eum modi voluptate iure commodi ipsa quisquam dicta nobis blanditiis
@@ -14,3 +14,6 @@
     </p>
   </div>
 </template>
+<style scoped>
+
+</style>

@@ -37,7 +37,7 @@
       </div>
     </section>
 
-    <section class=" grid md:grid-cols-3 lg:grid-cols-4 gap-4" >
+    <section class=" grid md:grid-cols-3 lg:grid-cols-4 gap-4 animate__animated zoom-in-down" >
       <article  
         v-for="document in documents"
         :key="document._id"
