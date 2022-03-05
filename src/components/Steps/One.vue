@@ -1,7 +1,7 @@
 <template>
   <div>
        <div>
-           <select   v-model="form.type"  class="
+           <select @change="toggleShowIdInput"   v-model="form.type"  class="
         w-full
         dark:bg-transparent
         rounded-lg
@@ -11,16 +11,17 @@
         mb-4
         mt-4
       ">  
-            <option value="" disabled selected>Select Document Type</option>
+            <option value="Select document type" ></option>
             <option class="op" value="ID Card">ID Card</option>
             <option class="op"  value="Birth Certificate">Birth Certificate</option>
             <option class="op"  value="Others">Others</option>
+            <option class="op"  value="Others">Passport Card</option>
           </select>
         </div>
     <input
       type="number"
       v-model="form.number"
-      required
+      v-if="showIdInput"
       name="number"
       placeholder="ID Number"
       class="
@@ -124,10 +125,18 @@
       return {
         form: { files: [] },
         file: null,
+        showIdInput: false,
       };
     },
 
     methods: {
+      toggleShowIdInput() {
+        if(this.form.type == "ID Card") {
+          this.showIdInput = true;
+        }else {
+          this.showIdInput = false;
+        }
+      },
       uploadFile() {
         if (!this.file) {
           return;

@@ -16,10 +16,12 @@
         mb-4
         mt-4
       ">  
-            <option value="" disabled selected>Select Document Type</option>
+            <option value="Select document name"></option>
             <option class="op" value="ID Card">ID Card</option>
             <option class="op"  value="Birth Certificate">Birth Certificate</option>
             <option class="op"  value="Others">Others</option>
+            <option class="op"  value="Others">Passport Card</option>
+            
           </select>
         </div>
  
