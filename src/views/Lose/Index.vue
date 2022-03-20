@@ -60,6 +60,7 @@
       "
     />
         <input
+      required
       v-model="info.email"
       type="email"
       name="email"
