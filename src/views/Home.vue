@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="bg-white dark:bg-black w-full py-4 my-8 md:my-16">
-      <div 
+      <div
         class="
           flex flex-wrap
           md:flex-nowrap
@@ -37,26 +37,40 @@
       </div>
     </section>
 
-    <section class=" grid md:grid-cols-3 lg:grid-cols-4 gap-4 animate__animated zoom-in-down" >
-      <article  
+    <section
+      class="
+        grid
+        md:grid-cols-3
+        lg:grid-cols-4
+        gap-4
+        animate__animated
+        zoom-in-down
+      "
+    >
+      <article
         v-for="document in documents"
         :key="document._id"
-        class="
-        
-          dark:bg-gray-900 dark:bg-opacity-90
-          mb-3
-          rounded-lg
-          shadow-lg
-        "
+        class="dark:bg-gray-900 dark:bg-opacity-90 mb-3 rounded-lg shadow-lg"
       >
-        <figure class="images-section h-64 overflow-hidden  w-full">
-          <img
-            v-if="document.files.length > 0"
-            class="images "
-            :src="document.files[0].path"
-            :alt="document.title"
-            @click="claim(document._id)"
-          />
+        <figure class="images-section h-64 overflow-hidden w-full">
+          <vue-load-image v-if="document.files.length > 0">
+            <template v-slot:image>
+              <img
+                class="images"
+                :src="document.files[0].path"
+                :alt="document.title"
+                @click="claim(document._id)"
+              />
+            </template>
+            <template v-slot:preloader>
+
+              <span class="text-sm text-center">
+                Loading
+              </span>
+              
+            </template>
+            <template v-slot:error>Image load fails</template>
+          </vue-load-image>
         </figure>
 
         <div class="w-full p-4">
@@ -89,7 +103,7 @@
               Contact through:
               <small class="text-primary">{{ document.f_number }}</small>
             </p>
-            
+
             <div v-if="!document.claimAt">
               <button @click="claim(document._id)" class="text-primary">
                 Claim it
@@ -112,81 +126,80 @@
 
 
 <script>
-  import { debounce } from "lodash";
-  // import CustomSelect from "@/components/CustomSelect";
-  import axios from "axios";
-  import config from "@/config";
-  import ClaimItModal from "../components/ClaimItModal.vue";
+import { debounce } from "lodash";
+// import CustomSelect from "@/components/CustomSelect";
+import axios from "axios";
+import config from "@/config";
+import ClaimItModal from "../components/ClaimItModal.vue";
+import VueLoadImage from "vue-load-image";
+export default {
+  components: {
+    // CustomSelect,
+    ClaimItModal,
+    "vue-load-image": VueLoadImage,
+  },
 
-  export default {
-    components: {
-      // CustomSelect,
-      ClaimItModal,
+  methods: {
+    claim(id) {
+      this.selected = id;
+      this.showModal = true;
     },
 
-    methods: {
-      claim(id) {
-        this.selected = id;
-        this.showModal = true;
-      },
-
-      confirmClaim(phone) {
-        console.log(phone);
-        if (this.documents.find((element) => element.f_number == phone)) {
-          let self = this;
-          axios.put(config.api_route + "/claim/" + this.selected).then(() => {
-            self.fetchData();
-          });
-        } else {
-          alert("Can't verify that you're human.");
-        }
-      },
-      fetchData: debounce(function () {
-        axios.get(config.api_route, { params: this.form }).then((response) => {
-          this.documents = response.data;
+    confirmClaim(phone) {
+      console.log(phone);
+      if (this.documents.find((element) => element.f_number == phone)) {
+        let self = this;
+        axios.put(config.api_route + "/claim/" + this.selected).then(() => {
+          self.fetchData();
         });
-      }, 100),
+      } else {
+        alert("Can't verify that you're human.");
+      }
     },
-    mounted() {
+    fetchData: debounce(function () {
+      axios.get(config.api_route, { params: this.form }).then((response) => {
+        this.documents = response.data;
+      });
+    }, 100),
+  },
+  mounted() {
+    this.fetchData();
+  },
+
+  data() {
+    return {
+      showModal: false,
+      form: { search: "" },
+      documents: [],
+      selected: null,
+    };
+  },
+
+  watch: {
+    "form.search"() {
       this.fetchData();
     },
-
-    data() {
-      return {
-        showModal: false,
-        form: { search: "" },
-        documents: [],
-        selected: null,
-      };
-    },
-
-    watch: {
-      "form.search"() {
-        this.fetchData();
-      },
-    },
-  };
+  },
+};
 </script>
 <style lang="css">
-    article {
-      cursor: pointer;
-    }
-    .images-section:hover {
-   position:relative;
-   -webkit-animation:glide 2s ease-in-out alternate infinite;
+article {
+  cursor: pointer;
+}
+.images-section:hover {
+  position: relative;
+  -webkit-animation: glide 2s ease-in-out alternate infinite;
 }
 
-@-webkit-keyframes glide  {
-   from {
-      left:0px;
-      top:0px;
-   }
-   
-   to {
-      left:0px;
-      top:20px;
-   }
-   
+@-webkit-keyframes glide {
+  from {
+    left: 0px;
+    top: 0px;
+  }
 
+  to {
+    left: 0px;
+    top: 20px;
+  }
 }
 </style>

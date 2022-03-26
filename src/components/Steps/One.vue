@@ -1,23 +1,27 @@
 <template>
   <div>
-       <div>
-           <select @change="toggleShowIdInput"   v-model="form.type"  class="
-        w-full
-        dark:bg-transparent
-        rounded-lg
-        outline-none
-        p-4
-        ml-2
-        mb-4
-        mt-4
-      ">  
-            <option value="Select document type" ></option>
-            <option class="op" value="ID Card">ID Card</option>
-            <option class="op"  value="Birth Certificate">Birth Certificate</option>
-            <option class="op"  value="Others">Others</option>
-            <option class="op"  value="Others">Passport Card</option>
-          </select>
-        </div>
+    <div>
+      <select
+        @change="toggleShowIdInput"
+        v-model="form.type"
+        class="
+          w-full
+          dark:bg-transparent
+          rounded-lg
+          outline-none
+          p-4
+          ml-2
+          mb-4
+          mt-4
+        "
+      >
+        <option value="Select document type"></option>
+        <option class="op" value="ID Card">ID Card</option>
+        <option class="op" value="Birth Certificate">Birth Certificate</option>
+        <option class="op" value="Others">Others</option>
+        <option class="op" value="Others">Passport Card</option>
+      </select>
+    </div>
     <input
       type="number"
       v-model="form.number"
@@ -77,12 +81,12 @@
         id="file"
         class="cursor-pointer hidden"
       />
-      <ul>
+      <ul class="flex space-x-2 p-8">
         <li v-for="file in form.files" :key="file.name">
-          {{ file.name }}
+          <img :src="file.path"  alt="" class="w-1/3">
         </li>
       </ul>
-      <label
+      <label v-if="form.files.length == 0"
         for="file"
         class="
           bg-blue-100
@@ -99,6 +103,7 @@
           left-0
           m-auto
         "
+        :class="[{'opacity-20': uploading}]"
       >
         <button
           type="button"
@@ -110,74 +115,82 @@
         <small class="3">Or Select image on your device</small>
       </label>
 
-      <button type="button" @click="uploadFile" v-if="file">Upload</button>
+     <div class="text-center" v-if="uploading">
+       Uploading
+     </div>
     </div>
   </div>
 </template>
 
 <script>
-  import axios from "axios";
-  import config from "@/config";
+import axios from "axios";
+import config from "@/config";
 
-  export default {
-    emits: ["change"],
-    data() {
-      return {
-        form: { files: [] },
-        file: null,
-        showIdInput: false,
-      };
+export default {
+  emits: ["change"],
+  data() {
+    return {
+      form: { files: [] },
+      file: null,
+      uploading: false,
+      showIdInput: false,
+    };
+  },
+
+  methods: {
+    toggleShowIdInput() {
+      if (this.form.type == "ID Card") {
+        this.showIdInput = true;
+      } else {
+        this.showIdInput = false;
+      }
     },
+    uploadFile() {
+      if (!this.file) {
+        return;
+      }
 
-    methods: {
-      toggleShowIdInput() {
-        if(this.form.type == "ID Card") {
-          this.showIdInput = true;
-        }else {
-          this.showIdInput = false;
-        }
-      },
-      uploadFile() {
-        if (!this.file) {
-          return;
-        }
+      this.uploading = true;
 
-        let formData = new FormData();
+      let formData = new FormData();
 
-        formData.append("file", this.file);
-        formData.append("name", this.file?.name);
+      formData.append("file", this.file);
+      formData.append("name", this.file?.name);
 
-        axios
-          .post(config.api_route + "/upload", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            this.form.files.push(response.data);
-            this.file = null;
-          })
-          .catch(function () {});
-      },
-      handleFileChange() {
-        this.file = this.$refs.file.files[0];
-        this.uploadFile();
-      },
+      axios
+        .post(config.api_route + "/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          this.form.files.push(response.data);
+          this.file = null;
+        })
+        .catch(function () {})
+        .finally(() => {
+          this.uploading = false;
+        });
     },
-
-    watch: {
-      form: {
-        handler(newForm) {
-          this.$emit("change", newForm);
-        },
-        deep: true,
-      },
+    handleFileChange() {
+      this.file = this.$refs.file.files[0];
+      this.uploadFile();
     },
-  };
+  },
+
+  watch: {
+    form: {
+      handler(newForm) {
+        this.$emit("change", newForm);
+      },
+      deep: true,
+    },
+  },
+};
 </script>
 <style lang="css">
-   .op {
-     background-color: white;
-     color: black;
-   }
+.op {
+  background-color: white;
+  color: black;
+}
 </style>
