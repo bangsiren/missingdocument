@@ -1,10 +1,16 @@
 <template>
   <div class="container">
 
-      <h1>Administrator</h1>
-      <button @click="logout">
+<div class="flex items-center justify-between">
+
+      <h1 class="text-xl font-bold">Administrator</h1>
+      <form action="">
+        
+      <button @click="logout" class="button block  primary ml-auto max-w-xs text-xs">
           Logout 
       </button>
+      </form>
+</div>
     <section class="bg-white dark:bg-black w-full py-4 my-8 md:my-16">
       <div
         class="
