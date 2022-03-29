@@ -7,7 +7,7 @@
       <form action="">
         
       <button @click="logout" class="button block  primary ml-auto max-w-xs text-xs">
-          Logout 
+          Logout
       </button>
       </form>
 </div>

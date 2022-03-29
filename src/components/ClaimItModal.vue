@@ -79,10 +79,19 @@
 
               <div class="my-3">
                 <input
+                  v-model="name"
+                  required
+                  class="text-gray-500 border rounded-md p-2 w-full"
+                  placeholder="Enter your Name"
+                  
+                />
+              </div>
+               <div class="my-3">
+                <input
                   v-model="phone"
                   required
                   class="text-gray-500 border rounded-md p-2 w-full"
-                  placeholder="Finder Number"
+                  placeholder="Your Number"
                 />
               </div>
 
@@ -107,7 +116,7 @@
                     focus-visible:ring-blue-500
                   "
                 >
-                  Claim it
+                  Claim
                 </button>
               </div>
             </form>
@@ -145,9 +154,10 @@
 
     setup(props, { emit }) {
       const phone = ref("");
-
+      const name = ref("");
       return {
         phone,
+        name,
 
         closeModal() {
           emit("update:modelValue", false);
@@ -159,7 +169,7 @@
 
         claimItem() {
           emit("update:modelValue", false);
-          emit("submitted", phone.value);
+          emit("submitted", phone.value, name.value);
         },
       };
     },

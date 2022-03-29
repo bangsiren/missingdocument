@@ -59,7 +59,7 @@
                 class="images"
                 :src="document.files[0].path"
                 :alt="document.title"
-                @click="claim(document._id)"
+                @click="claim(document._id, document.name, document.f_number)"
               />
             </template>
             <template v-slot:preloader>
@@ -99,13 +99,13 @@
             </div>
 
             <p v-html="document.description"></p>
-            <p>
+            <!-- <p>
               Contact through:
               <small class="text-primary">{{ document.f_number }}</small>
-            </p>
+            </p> -->
 
             <div v-if="!document.claimAt">
-              <button @click="claim(document._id)" class="text-primary">
+              <button @click="claim(document._id, document.name, document.f_number)" class="text-primary">
                 Claim it
               </button>
             </div>
@@ -139,22 +139,40 @@ export default {
     "vue-load-image": VueLoadImage,
   },
 
+  data() {
+    return {
+      showModal: false,
+      form: { search: "" },
+      documents: [],
+      selected: null,
+      claimData: {founderName: null, founderPhone: null, claimerName: null, claimerPhone: null}
+    };
+  },
+
+
   methods: {
-    claim(id) {
+    claim(id, name, phone) {
       this.selected = id;
       this.showModal = true;
+      this.claimData.founderName = name;
+      this.claimData.founderPhone = phone;
     },
 
-    confirmClaim(phone) {
+    confirmClaim(phone, name) {
+      console.log("Claimer Info Below");
       console.log(phone);
-      if (this.documents.find((element) => element.f_number == phone)) {
+      console.log(name);
+      this.claimData.claimerPhone = phone;
+      this.claimData.claimerName = name;
+
+      axios.post(config.api_route + "/claim", this.claimData).then(() => {
+        alert("Request Submited We'll Get Back To You");
+      })
         let self = this;
         axios.put(config.api_route + "/claim/" + this.selected).then(() => {
           self.fetchData();
         });
-      } else {
-        alert("Can't verify that you're human.");
-      }
+      
     },
     fetchData: debounce(function () {
       axios.get(config.api_route, { params: this.form }).then((response) => {
@@ -166,14 +184,6 @@ export default {
     this.fetchData();
   },
 
-  data() {
-    return {
-      showModal: false,
-      form: { search: "" },
-      documents: [],
-      selected: null,
-    };
-  },
 
   watch: {
     "form.search"() {

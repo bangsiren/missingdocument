@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <h1 class="text-center text-2xl pt-20">
-      Submit Your Information And Wait For Notification Once a new Missing
+      Submit Your Information And Wait For Notification <br> Once a new Missing
       Document Is submitted
     </h1>
     <section
-      class="bg-white dark:bg-gray-900 rounded-lg w-full py-4 my-8 md:my-16"
+      class="bg-white dark:bg-gray-900 rounded-lg w-full py-4 my-4 md:my-10"
     >
       <div class="max-w-2xl mx-auto">
         <div>
