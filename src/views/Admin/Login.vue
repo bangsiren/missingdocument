@@ -48,11 +48,11 @@
             />
           </div>
 
-          <p class="py-4 pl-2">
+          <!-- <p class="py-4 pl-2">
             Dont have an account? <router-link class="text-primary" to="/register"
               >click here</router-link
             >
-          </p>
+          </p> -->
 
           <!-- Sign in button -->
    
