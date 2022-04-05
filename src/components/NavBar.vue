@@ -32,8 +32,8 @@
         <router-link to="/" class="w-full">
           <logo class="h-10 text-primary md:h-16" />
         </router-link>
-        <router-link to="/security" class="text-primary changetx">How_It_Works </router-link>
-         <router-link to="/post" class="text-primary changetx"> Missing_Request </router-link>
+        <router-link router-link-active="active" to="/security" class="text-primary changetx navlink">How_It_Works </router-link>
+         <router-link router-link-active="active" to="/post" class="text-primary changetx navlink"> Missing_Request </router-link>
       </div>
       <nav class="md:space-x-2 md:w-auto flex justify-between w-full">
         <router-link to="/upload-document" class="btn button primary"
@@ -73,7 +73,32 @@
     },
   };
 </script>
-<style>
+
+<style scoped>
+
+.navlink {
+  font-weight: 900;
+  text-decoration-color: rgb(18, 158, 158);
+  text-decoration-thickness: 1px;
+  padding: 7px;
+  border: 1px solid rgb(9, 54, 94);
+  border-radius: 5px;
+}
+.navlink:hover {
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: rgb(14, 81, 81);
+  text-decoration-thickness: 2px;
+  -moz-text-decoration-line: unset;
+  text-decoration-style: dotted;
+  text-underline-position: above;
+
+}
+.active {
+   padding: 7px;
+  border: 1px solid rgb(192, 27, 32);
+  border-radius: 5px;
+}
    .btn {
    position:relative;
    -webkit-animation:glide 3s ease-in-out alternate infinite;
@@ -104,6 +129,7 @@
 @media only screen and (max-width: 360px) {
    .changetx {
      font-size: 13px;
+   
    }
 }
 
