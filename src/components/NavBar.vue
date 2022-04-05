@@ -28,14 +28,14 @@
         mx-auto
       "
     >
-      <div class="py-4 md:py-0 flex items-center space-x-3">
+      <div class="py-4 md:py-0 md:w-50 flex items-center space-x-5">
         <router-link to="/" class="w-full">
           <logo class="h-10 text-primary md:h-16" />
         </router-link>
-        <router-link to="/security" class="text-primary changetx"> <span>How It Works</span> </router-link>
-         <router-link to="/post" class="text-primary changetx"> Missing Request </router-link>
+        <router-link to="/security" class="text-primary changetx">How_It_Works </router-link>
+         <router-link to="/post" class="text-primary changetx"> Missing_Request </router-link>
       </div>
-      <nav class="md:space-x-4 md:w-auto flex justify-between w-full">
+      <nav class="md:space-x-2 md:w-auto flex justify-between w-full">
         <router-link to="/upload-document" class="btn button primary"
           >Upload Document
         </router-link>

@@ -8,6 +8,7 @@
           @submit.prevent="loginUser"
         >
           <div>
+            <span class="wrong" v-if="loginError">Wrong Password or Email</span>
             <input
               type="text"
               id="email"
@@ -73,6 +74,7 @@ import config from "@/config";
 export default {
   data() {
     return {
+      loginError: false,
       login: {
         email: "",
         password: "",
@@ -91,6 +93,7 @@ export default {
             if (data.token) this.$router.push("/admin");
           })
           .catch((err) => {
+            this.loginError = true;
             console.log(err);
           });
       } catch (err) {
@@ -101,3 +104,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+ .wrong {
+   color: red;
+ }
+</style>

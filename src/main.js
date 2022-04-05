@@ -9,6 +9,6 @@ const app = createApp(App)
 app.use(router)
 app.use(Notifications)
 app.isCustomElement = tag => tag === 'ion-icon'
-app.mount('#app')
+app.mount('#app');
 
 // https://missingdocuments.herokuapp.com
