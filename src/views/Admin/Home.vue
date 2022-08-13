@@ -28,7 +28,7 @@
           placeholder="Search for Document by name, id number"
         />
         <!-- <custom-select class="w-full md:w-72"> </custom-select> -->
-        <!-- <custom-select class="w-full md:w-72"> </custom-select> -->
+        
 
         <button
           class="
